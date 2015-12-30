@@ -117,7 +117,8 @@ public class RFCipher {
 
         return "" + cb;
     }
-
+    
+    // without key
     static String[] RFDecryptionWork(String text) {
 
         String[] ans = new String[text.length() - 2];

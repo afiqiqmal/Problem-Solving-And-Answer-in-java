@@ -1,14 +1,16 @@
 /*
-   modified by hafiq
-   One time pad cipher and decrypt
-   any expert can advise me to improve this code...tq..
+
 */
 import java.util.*;
 
-public class OTPCipher{
+public class OTPCipher2{
+                                //  A B  C  D  E  F G H  I J K  L M  N  O  P Q  R S  T U  V  W  X Y  Z
+   private static Integer[] list = {7,10,19,23,0,22,6,25,9,1,15,4,21,20,16,8,17,5,24,3,11,12,14,2,13,18};
+   private static String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+   
    public static void main(String[] args){
       String text = "REPEAT ATTACK TONIGHT";
-      String key = RandomAlpha(3);
+      String key = "SOVIET";
       String k = "";
       int len = text.length();
       if(key.length()<len){
@@ -38,30 +40,18 @@ public class OTPCipher{
    }
    
    public static String OTPEncryption(String text,String key){
-      String alphaU = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      String alphaL = "abcdefghijklmnopqrstuvwxyz";
-      
       int len = text.length();
-
-      String sb = "";
+      String sb= "";
       for(int x=0;x<len;x++){
          char get = text.charAt(x);
          char keyget = key.charAt(x);
          if(Character.isUpperCase(get)){
-            int index = alphaU.indexOf(get);
-            int keydex = alphaU.indexOf(Character.toUpperCase(keyget));
+            int index = list[alpha.indexOf(get)];
+            int keydex = list[alpha.indexOf(keyget)];
             
             int total = (index + keydex) % 26;
             
-            sb = sb+ alphaU.charAt(total);
-         }
-         else if(Character.isLowerCase(get)){
-            int index = alphaL.indexOf(get);
-            int keydex = alphaU.indexOf(Character.toLowerCase(keyget));
-            
-            int total = (index + keydex) % 26;
-            
-            sb = sb+ alphaL.charAt(total);
+            sb = sb + alpha.charAt(Arrays.asList(list).indexOf(total));
          }
          else{
             sb = sb + get;
@@ -71,9 +61,6 @@ public class OTPCipher{
       return sb;
    }
    public static String OTPDecryption(String text,String key){
-      String alphaU = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      String alphaL = "abcdefghijklmnopqrstuvwxyz";
-      
       int len = text.length();
       
       String sb = "";
@@ -81,29 +68,18 @@ public class OTPCipher{
          char get = text.charAt(x);
          char keyget = key.charAt(x);
          if(Character.isUpperCase(get)){
-            int index = alphaU.indexOf(get);
-            int keydex = alphaU.indexOf(Character.toUpperCase(keyget));
+            int index = list[alpha.indexOf(get)];
+            int keydex = list[alpha.indexOf(keyget)];
 
-            int total = (index - keydex) % 26;
-            total = (total<0)? total + 26 : total;
+            int total = (index + 26) - keydex;
+            total = total % 26;
             
-            sb = sb+ alphaU.charAt(total);
-         }
-         else if(Character.isLowerCase(get)){
-            int index = alphaL.indexOf(get);
-            int keydex = alphaU.indexOf(Character.toLowerCase(keyget));
-            
-            int total = (index - keydex) % 26;
-            total = (total<0)? total + 26 : total;
-            
-            sb = sb+ alphaL.charAt(total);
+            sb = sb + alpha.charAt(Arrays.asList(list).indexOf(total));
          }
          else{
             sb = sb + get;
          }
       }
-      
       return sb;
-   }
-   
+   }   
 }
