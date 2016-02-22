@@ -5,7 +5,7 @@ import java.math.*;
 public class Affine{
    public static void main(String[] args) {
        String input = "TWENTYFIFTEEN";
-       int x = 17;
+       int x = 21;
        int y = 20;
        String enc = encrypt(input,x,y);
        String dec = decrypt(enc,x,y);
@@ -29,7 +29,7 @@ public class Affine{
    
    public static String decrypt(String input,int FK,int SK) {
        String str = "";
-       int x = 0;
+       int IN = 0;
        int inverse = 0;
        
        // find 1 by using modular inverse
@@ -37,17 +37,16 @@ public class Affine{
        // IN is 0 - infiniti
        // if total == 1, then IN is the inverse modular
        while(true){
-         inverse = FK * x % 26;
+         inverse = FK * IN % 26;
             if(inverse == 1)
                break;
-         x++;
+         IN++;
        }
-       
        for (int in = 0; in < input.length(); in++) {
            char get = input.charAt(in);
            if (Character.isLetter(get)) {
                // IN *(x-b) mod 26
-               get = (char)(x * ((get + 'A') - SK) % 26 + 'A');
+               get = (char)(IN * ((get + 'A') - SK) % 26 + 'A');
            }
            str +=get;
        }

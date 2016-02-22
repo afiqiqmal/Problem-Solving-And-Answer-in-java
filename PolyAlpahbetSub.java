@@ -12,7 +12,7 @@ public class PolyAlpahbetSub{
    
    public static void main(String[] args){
       
-      String text = "IHATEYOU";
+      String text = "IHateYou";
       int period = 4;
       Period(period);
       
@@ -50,16 +50,32 @@ public class PolyAlpahbetSub{
       
       int p = 0;
       for(int x=0;x<len;x++){
-         int get = alpha.indexOf(""+text.charAt(x));
-        
          if (p == period)
-            p = 0;
+               p = 0;
+               
+         char g = text.charAt(x);
          
-         String CT = list.get(p);
-         
-         sb = sb + CT.charAt(get);
+         if(Character.isUpperCase(g)){
+            int get = alpha.indexOf(g);
             
-         p++;
+            String CT = list.get(p);
+            
+            sb = sb + CT.charAt(get);
+               
+            p++;
+         }
+         else if(Character.isLowerCase(g)){
+            int get = alpha.toLowerCase().indexOf(g);
+            
+            String CT = list.get(p);
+            
+            sb = sb + CT.toLowerCase().charAt(get);
+               
+            p++;
+         }
+         else{
+            sb += g;
+         }
       }
       
       return sb;
@@ -75,11 +91,24 @@ public class PolyAlpahbetSub{
          if (p == period)
             p = 0;
          
-         int get = list.get(p).indexOf(""+text.charAt(x));
-         
-         sb = sb + alpha.charAt(get);
+         char g = text.charAt(x);
+         if(Character.isUpperCase(g)){
+            int get = list.get(p).indexOf(g);
             
-         p++;
+            sb = sb + alpha.charAt(get);
+               
+            p++;
+         }
+         else if(Character.isLowerCase(g)){
+            int get = list.get(p).toLowerCase().indexOf(g);
+            
+            sb = sb + alpha.toLowerCase().charAt(get);
+               
+            p++;
+         }
+         else{
+            sb += g;
+         }
       }
       
       return sb;

@@ -13,7 +13,7 @@ import java.util.*;
 public class Bruteforce
 {
   public static void main(String[] args){
-      String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       int max = 4; //limit length
       generate(str.toCharArray(),max);
   }

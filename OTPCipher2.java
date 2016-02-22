@@ -4,13 +4,13 @@
 import java.util.*;
 
 public class OTPCipher2{
-                                //  A B  C  D  E  F G H  I J K  L M  N  O  P Q  R S  T U  V  W  X Y  Z
-   private static Integer[] list = {7,10,19,23,0,22,6,25,9,1,15,4,21,20,16,8,17,5,24,3,11,12,14,2,13,18};
-   private static String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                                //  A  B  C  D  E  F  G  H  I J K L M N O P Q R S  T  U  V  W  X  Y  Z
+   private static Integer[] list = {25,23,21,19,17,15,13,11,9,7,5,3,1,0,2,4,6,8,10,12,14,16,18,20,22,24};
+   private static String alpha =  "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    
    public static void main(String[] args){
-      String text = "REPEAT ATTACK TONIGHT";
-      String key = "SOVIET";
+      String text = "Conspiracy Theory";
+      String key =  "UNITEDSTATE";
       String k = "";
       int len = text.length();
       if(key.length()<len){
@@ -24,7 +24,7 @@ public class OTPCipher2{
          }
          key = k;
       }
-      
+      key = key.toUpperCase();
       String enc = OTPEncryption(text,key);
       System.out.println("Plaintext : "+text);
       System.out.println("Encrypted : "+enc);
@@ -42,9 +42,10 @@ public class OTPCipher2{
    public static String OTPEncryption(String text,String key){
       int len = text.length();
       String sb= "";
+      int y =0;
       for(int x=0;x<len;x++){
          char get = text.charAt(x);
-         char keyget = key.charAt(x);
+         char keyget = key.charAt(y);
          if(Character.isUpperCase(get)){
             int index = list[alpha.indexOf(get)];
             int keydex = list[alpha.indexOf(keyget)];
@@ -52,6 +53,16 @@ public class OTPCipher2{
             int total = (index + keydex) % 26;
             
             sb = sb + alpha.charAt(Arrays.asList(list).indexOf(total));
+            y++;
+         }
+         else if(Character.isLowerCase(get)){
+            int index = list[alpha.toLowerCase().indexOf(get)];
+            int keydex = list[alpha.indexOf(keyget)];
+            
+            int total = (index + keydex) % 26;
+            
+            sb = sb + alpha.toLowerCase().charAt(Arrays.asList(list).indexOf(total));
+            y++;
          }
          else{
             sb = sb + get;
@@ -64,9 +75,10 @@ public class OTPCipher2{
       int len = text.length();
       
       String sb = "";
+      int y=0;
       for(int x=0;x<len;x++){
          char get = text.charAt(x);
-         char keyget = key.charAt(x);
+         char keyget = key.charAt(y);
          if(Character.isUpperCase(get)){
             int index = list[alpha.indexOf(get)];
             int keydex = list[alpha.indexOf(keyget)];
@@ -75,6 +87,17 @@ public class OTPCipher2{
             total = total % 26;
             
             sb = sb + alpha.charAt(Arrays.asList(list).indexOf(total));
+            y++;
+         }
+         else if(Character.isLowerCase(get)){
+            int index = list[alpha.toLowerCase().indexOf(get)];
+            int keydex = list[alpha.indexOf(keyget)];
+
+            int total = (index + 26) - keydex;
+            total = total % 26;
+            
+            sb = sb + alpha.toLowerCase().charAt(Arrays.asList(list).indexOf(total));
+            y++;
          }
          else{
             sb = sb + get;
