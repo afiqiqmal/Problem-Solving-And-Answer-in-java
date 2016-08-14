@@ -20,7 +20,7 @@ public class PLock {
         for(int x=0;x<cases;x++){
             String get = scan.next();
 
-            if(get.matches("[a-zA-Z]+")){
+            if(get.length()>2 && get.matches("[A-Z]+")){
                 if (!findDuplicate(get))
                     ans[x] = "Case #"+(x+1)+": VALID";
                 else

@@ -18,23 +18,33 @@ public class MatrixReloaded{
 
         for(int x=0;x<cases;x++){
             String binary = scan.next();
-            long len = binary.length();
+            int len = binary.length();
             boolean range = (len > 100 && len < 65535);
             int count = 0;
             if(range){
                 for(int y=0;y<len;y++){
                     if(binary.charAt(y) == '1'){
                         int z = y+1;
-                        while(true){
-                            if(binary.charAt(z) == '0'){
-                                y = z;
+                        if (z>=len){
+                            if(binary.charAt(y) == '1') {
                                 count++;
-                                break;
                             }
-                            if(z>=len){
-                                break;
+                            break;
+                        }
+                        else {
+                            while (true) {
+                                if (z < len) {
+                                    if (binary.charAt(z) == '0') {
+                                        y = z;
+                                        count++;
+                                        break;
+                                    }
+                                } else {
+                                    break;
+                                }
+
+                                z++;
                             }
-                            z++;
                         }
                     }
                     else{

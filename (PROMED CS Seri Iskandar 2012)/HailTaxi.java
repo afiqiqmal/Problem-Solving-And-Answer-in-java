@@ -25,10 +25,12 @@ public class HailTaxi {
                     break;
                 else {
                     String[] in = input.split(" ");
-                    list.add(new Coordinate(Integer.parseInt( in [0]), Integer.parseInt( in [1])));
+                    list.add(new Coordinate(Double.parseDouble( in [0]), Double.parseDouble( in [1])));
                 }
             }
-
+            
+            list.add(1,new Coordinate(0,0));
+            
             CoordinateDetail bf = bruteForce(list);
 
             ans[x] = "Case #" + (x + 1) + ": " + bf;
@@ -40,33 +42,33 @@ public class HailTaxi {
     }
 
     private static class Coordinate {
-        private int x;
-        private int y;
+        private double x;
+        private double y;
 
-        public Coordinate(int x, int y) {
+        public Coordinate(double x, double y) {
             this.x = x;
             this.y = y;
         }
 
-        public int getX() {
+        public double getX() {
             return x;
         }
 
-        public int getY() {
+        public double getY() {
             return y;
         }
 
         public String toString() {
-            return x + " " + y;
+            return (int)x + " " + (int)y;
         }
     }
 
     private static class CoordinateDetail {
         private Coordinate point1 = null;
         private Coordinate point2 = null;
-        private int distance = 0;
+        private double distance = 0;
 
-        public CoordinateDetail(Coordinate point1, Coordinate point2, int distance) {
+        public CoordinateDetail(Coordinate point1, Coordinate point2, double distance) {
             this.point1 = point1;
             this.point2 = point2;
             this.distance = distance;
@@ -81,12 +83,12 @@ public class HailTaxi {
         }
 
 
-        public int getDistance() {
+        public double getDistance() {
             return distance;
         }
 
 
-        public void set(Coordinate point1, Coordinate point2, int distance) {
+        public void set(Coordinate point1, Coordinate point2, double distance) {
             this.point1 = point1;
             this.point2 = point2;
             this.distance = distance;
@@ -97,29 +99,30 @@ public class HailTaxi {
         }
     }
 
-    private static int calDistance(Coordinate p1, Coordinate p2) {
-        int xdist = p2.getX() - p1.getX();
-        int ydist = p2.getY() - p1.getY();
-        return (int) Math.hypot(xdist, ydist);
+    private static double calDistance(Coordinate p1, Coordinate p2) {
+        double xdist = p2.getX() - p1.getX();
+        double ydist = p2.getY() - p1.getY();
+        return Math.hypot(xdist, ydist);
     }
 
-    private static CoordinateDetail bruteForce(List < Coordinate > points) {
+    private static CoordinateDetail bruteForce(List <Coordinate> points) {
         int coorSize = points.size();
         if (coorSize < 2)
             return null;
 
         CoordinateDetail coorPoint = new CoordinateDetail(points.get(0), points.get(1), calDistance(points.get(0), points.get(1)));
         if (coorSize > 2) {
-            for (int i = 0; i < coorSize - 1; i++) {
-                Coordinate point1 = points.get(i);
-                for (int j = i + 1; j < coorSize; j++) {
+            // for (int i = 0; i < coorSize - 1; i++) {
+                Coordinate point1 = points.get(0);
+                for (int j = 1; j < coorSize; j++) {
                     Coordinate point2 = points.get(j);
-                    int distance = calDistance(point1, point2);
+                    double distance = calDistance(point1, point2);
                     if (distance < coorPoint.getDistance())
                         coorPoint.set(point1, point2, distance);
                 }
-            }
+            // }
         }
         return coorPoint;
     }
+   
 }
